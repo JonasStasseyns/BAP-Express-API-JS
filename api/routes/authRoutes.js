@@ -5,7 +5,7 @@ import { asyncWrapper } from "../../utils/asyncWrapper";
 const crudRoutes = express.Router();
 
 crudRoutes.get("/", function(req, res, next) {
-  res.json({ message: "from index api" });
+    res.json({ message: "from index api" });
 });
 
 // Create

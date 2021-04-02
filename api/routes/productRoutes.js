@@ -7,6 +7,4 @@ productRoutes.get("/", function(req, res, next) {
     res.json({ message: "May the cors be with you." });
 });
 
-productRoutes.use("/auth", authRoutes);
-
 export default productRoutes;

@@ -1,5 +1,5 @@
 import express from "express";
-import userController from "../../api/controllers/crud.controller";
+import userController from "../../module/crud/controller-example";
 import { asyncWrapper } from "../../utils/asyncWrapper";
 
 const crudRoutes = express.Router();

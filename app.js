@@ -1,10 +1,16 @@
 import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
-import mainRouter from "./api";
+import apiRouter from "./api/routes";
 import connectMongo from "./config/mongoconnect";
+import cors from 'cors'
 
 const app = express();
+
+const corsOptions = {
+  origin: 'https://bachelorproef-b2b80.web.app/',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 // Production enviroment
 const isProduction = process.env.NODE_ENV === "production";
@@ -15,8 +21,7 @@ app.use(morgan("dev"));
 
 //Connect Mongo
 connectMongo();
-
-app.use("/", mainRouter);
+app.use("/api/v1", cors(corsOptions), apiRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

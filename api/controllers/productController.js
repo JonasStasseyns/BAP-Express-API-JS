@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Product } from "../models/Product";
+import { productModel as Product } from "../models/Product";
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
 

@@ -5,5 +5,6 @@ import productController from "../controllers/productController";
 const productRoutes = express.Router();
 
 productRoutes.get("/", productController.findAll);
+productRoutes.get("/create", productController.create);
 
 export default productRoutes;

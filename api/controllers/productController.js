@@ -17,4 +17,22 @@ productController.findAll = async (req, res) => {
     }
 };
 
+productController.create = async (req, res) => {
+    try {
+        return new Product({
+            title: "producttitel",
+            excerpt: 'kortebeschrijving',
+            description: "langebeschrijving",
+            specs: 'specsdatastring',
+            price: 600,
+            stock: 548,
+            category: "mobileac"
+        }).save()
+    } catch (error) {
+        return res
+            .status(httpStatus.INTERNAL_SERVER_ERROR)
+            .json({ error: error.toString() });
+    }
+}
+
 export default productController;

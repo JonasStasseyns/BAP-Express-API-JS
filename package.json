@@ -23,9 +23,11 @@
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.6",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "socket.io": "1.4.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

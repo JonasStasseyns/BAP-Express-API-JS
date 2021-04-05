@@ -9,18 +9,25 @@ import io from "socket.io"
 
 const app = express();
 const server = http.createServer(app)
-let socketio = new io(server);
+let socketio = new io(server, {
+  cors: {
+    origin: "https://bachelorproef-b2b80.web.app",
+    methods: ["GET", "POST"]
+  }
+});
 
 // const corsOptions = {
 //   origin: 'https://bachelorproef-b2b80.web.app',
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
-// Production enviroment
+// Production enviromentss
 const isProduction = process.env.NODE_ENV === "production";
 app.use(bodyParser.json());
 
-
+socketio.on('connection', client => {
+  console.log(client.id)
+})
 
 //https debug
 app.use(morgan("dev"));

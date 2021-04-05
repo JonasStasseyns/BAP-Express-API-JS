@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production && npm run server:prod",
+    "archive----start": "cross-env NODE_ENV=production && npm run server:prod",
+    "start": "npm run dev",
     "server:prod": "node dist/app.js",
     "build": "babel app.js --out-dir build",
     "clean": "rimraf dist",
@@ -27,7 +28,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.6",
     "morgan": "^1.10.0",
-    "socket.io": "1.4.6"
+    "socket.io": "2.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

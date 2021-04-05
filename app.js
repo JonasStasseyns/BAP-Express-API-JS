@@ -13,7 +13,6 @@ const app = express();
 // Production enviromentss
 const isProduction = process.env.NODE_ENV === "production";
 app.use(bodyParser.json());
-console.log("ss")
 
 
 //https debug
@@ -33,10 +32,9 @@ let socketio = io.listen(server, {
   }
 });
 
-socketio.on('connection', function(client) {
-  console.log('Client connected...');
-
-  client.on('join', function(data) {
+socketio.on('connection', socket => {
+  console.log(`Client "${socket.id}" connected`)
+  socket.on('new-message', function(data) {
     console.log(data);
   });
 

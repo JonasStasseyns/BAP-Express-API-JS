@@ -17,6 +17,24 @@ productController.findAll = async (req, res) => {
     }
 };
 
+productController.search = async (req, res) => {
+    try {
+        const products = await Product.find({ "title": { "$regex": req.params.search, "$options": "i" }})
+        return res.json(products)
+    }catch (err) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error:err.toString()})
+    }
+}
+
+productController.findById = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id)
+        return res.json(product)
+    }catch (err) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error:err.toString()})
+    }
+}
+
 productController.create = async (req, res) => {
     try {
         return new Product({

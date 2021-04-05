@@ -27,7 +27,7 @@ app.use("/api/v1", apiRouter);
 const server = app.listen(5000)
 let socketio = io.listen(server, {
   cors: {
-    origin: ["https://bachelorproef-b2b80.web.app", "http://178.117.218.240"],
+    origin: ["https://bachelorproef-b2b80.web.app", "https://178.117.218.240"],
     methods: ["GET", "POST"]
   }
 });

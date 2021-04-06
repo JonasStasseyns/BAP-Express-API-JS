@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { userModel } from "./crud.model";
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
+import {sendToken} from '../../app'
 
 const userController = {};
 
@@ -15,7 +16,7 @@ userController.register = async (req, res, next) => {
       if (user.length >= 1) {
         return res.status(httpStatus.CONFLICT).json({
           message: "Mail exists"
-        });
+        })
       } else {
         bcrypt.hash(req.body.password, 10, async (err, hash) => {
           console.log(hash);
@@ -40,6 +41,15 @@ userController.register = async (req, res, next) => {
       }
     });
 };
+
+userController.authenticatedLogin = async (req, res) => {
+  sendToken({
+    message: "Auth successful",
+    token: req.body.token,
+    sid: req.body.sid
+  })
+  res.status(httpStatus.OK).json({message:'oki'})
+}
 
 // Login user
 userController.login = async (req, res, next) => {
@@ -69,9 +79,17 @@ userController.login = async (req, res, next) => {
               expiresIn: appConfig.jwt_expiration
             }
           );
+          if(req.body.sid){
+            const data = {
+              message: "Auth successful",
+              token: token,
+              sid: req.body.sid
+            }
+            sendToken(data)
+          }
           return res.status(httpStatus.OK).json({
             message: "Auth successful",
-            token: token
+            token: token,
           });
         }
         res.status(httpStatus.UNAUTHORIZED).json({

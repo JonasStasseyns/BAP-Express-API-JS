@@ -9,6 +9,7 @@ import io from "socket.io"
 
 const app = express();
 
+const socketRegistry = []
 
 // Production enviromentss
 const isProduction = process.env.NODE_ENV === "production";
@@ -34,8 +35,13 @@ let socketio = io.listen(server, {
 
 socketio.on('connection', socket => {
   console.log(`Client "${socket.id}" connected`)
-  socket.on('new-message', function(data) {
+  socket.on('login-tether', (data) => {
+    console.log('ani');
     console.log(data);
   });
-
 });
+
+export const sendToken = (data) => {
+  console.log('At least im called you know :)')
+  socketio.to(data.sid).emit('token-event', data);
+}

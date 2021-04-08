@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { technicianModel as technician } from "../models/technician";
+import { technicianModel as technician } from "../models/Technician";
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
 

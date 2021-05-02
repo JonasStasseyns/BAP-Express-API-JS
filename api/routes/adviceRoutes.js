@@ -7,6 +7,8 @@ const adviceRoutes = express.Router();
 
 adviceRoutes.get("/:uid", adviceController.findLatest)
 adviceRoutes.post("/", adviceController.create)
+adviceRoutes.get("/techs/:uid", adviceController.findTechLatest)
 adviceRoutes.post("/manual", adviceController.manualFilter)
+adviceRoutes.post("/techs/manual", adviceController.manualFilter)
 
 export default adviceRoutes;

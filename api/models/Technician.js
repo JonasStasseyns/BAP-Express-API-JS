@@ -32,7 +32,7 @@ const technicianSchema = new schema({
         required: true
     },
     allowedJobs: {
-        type: String,
+        type: Object,
         required: true
     }
 });

@@ -19,7 +19,7 @@ technicianController.findAll = async (req, res) => {
 
 technicianController.search = async (req, res) => {
     try {
-        const technicians = await technician.find({ "title": { "$regex": req.params.search, "$options": "i" }})
+        const technicians = await Technician.find({ "title": { "$regex": req.params.search, "$options": "i" }})
         return res.json(technicians)
     }catch (err) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error:err.toString()})

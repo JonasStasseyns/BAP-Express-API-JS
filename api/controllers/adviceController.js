@@ -2,6 +2,7 @@ import httpStatus from "../../utils/httpStatus";
 // import {OrderConfirmation} from "../../config/mails/html.html";
 import {adviceModel as Advice} from "../models/Advice";
 import {productModel as Product} from "../models/Product";
+import {technicianModel as Tech} from "../models/Technician";
 
 const adviceController = {};
 
@@ -59,6 +60,47 @@ adviceController.findLatest = async (req, res) => {
 
 
         return res.status(httpStatus.OK).json(products);
+    } catch (error) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error: error.toString()});
+    }
+};
+
+adviceController.findTechLatest = async (req, res) => {
+    try {
+        const latestAdvice = await Advice.findOne({uid: req.params.uid}).sort({createdAt: -1})
+
+        console.log(latestAdvice)
+
+        const jobMapper = {
+            "manual": "start",
+            "semi": "install",
+            "auto": "all"
+        }
+
+        console.log('')
+        console.log('')
+        console.log(latestAdvice.install)
+        console.log(jobMapper[latestAdvice.install])
+        console.log('')
+        console.log('')
+
+        // const tech = await Tech.find().sort({created_at: -1})
+        const techs = await Tech.find()
+
+        const filteredTechs = []
+
+        techs.forEach(t => {
+            if(t.allowedJobs[jobMapper[latestAdvice]] == true) {
+                console.log('match')
+                filteredTechs.push(t)
+            }else{
+                console.log('--')
+            }
+        })
+
+
+
+        return res.status(httpStatus.OK).json('dd');
     } catch (error) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error: error.toString()});
     }

@@ -1,8 +1,5 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { productModel as Product } from "../models/Product";
+import {productModel as Product} from "../models/Product";
 import httpStatus from "../../utils/httpStatus";
-import appConfig from "../../config/env";
 
 const productController = {};
 
@@ -13,16 +10,44 @@ productController.findAll = async (req, res) => {
     } catch (error) {
         return res
             .status(httpStatus.INTERNAL_SERVER_ERROR)
-            .json({ error: error.toString() });
+            .json({error: error.toString()});
     }
 };
 
-productController.search = async (req, res) => {
+productController.query = async (req, res) => {
     try {
-        const products = await Product.find({ "title": { "$regex": req.params.search, "$options": "i" }})
+        console.log(req.body)
+        console.log(req.body.sort)
+        let sorting;
+        let finalQuery = {
+            $and: []
+        }
+
+        if (req.body.search) {
+            finalQuery.$and.push({
+                "title": {"$regex": req.body.search, "$options": "i"}
+            })
+        }
+        if (req.body.filter && req.body.filter !== 'false') {
+            finalQuery.$and.push({
+                "category": req.body.filter
+            })
+        }
+        if (req.body.sort && req.body.sort !== 'false') {
+            sorting = req.body.sort
+        }
+
+        if(finalQuery.$and.length === 0){
+            finalQuery = {}
+        }
+
+        console.log(finalQuery)
+
+        const products = await Product.find(finalQuery).sort(sorting)
+        // const products = await Product.find({ "title": { "$regex": req.params.search, "$options": "i" }})
         return res.json(products)
-    }catch (err) {
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error:err.toString()})
+    } catch (err) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error: err.toString()})
     }
 }
 
@@ -30,26 +55,32 @@ productController.findById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id)
         return res.json(product)
-    }catch (err) {
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error:err.toString()})
+    } catch (err) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error: err.toString()})
     }
 }
 
 productController.create = async (req, res) => {
     try {
-        return new Product({
-            title: "producttitel",
-            excerpt: 'kortebeschrijving',
-            description: "langebeschrijving",
-            specs: 'specsdatastring',
-            price: 600,
-            stock: 548,
-            category: "mobileac"
-        }).save()
+        const product = await new Product(req.body).save()
+        return res.status(httpStatus.OK).json(product)
     } catch (error) {
         return res
             .status(httpStatus.INTERNAL_SERVER_ERROR)
-            .json({ error: error.toString() });
+            .json({error: error.toString()});
+    }
+}
+
+productController.update = async (req, res) => {
+    try {
+        console.log(req.body)
+        await Product.findByIdAndUpdate(req.body.id, req.body)
+        // const product = await new Product(req.body).save()
+        return res.status(httpStatus.OK).json('Done')
+    } catch (error) {
+        return res
+            .status(httpStatus.INTERNAL_SERVER_ERROR)
+            .json({error: error.toString()});
     }
 }
 

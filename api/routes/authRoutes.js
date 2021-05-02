@@ -1,5 +1,5 @@
 import express from "express";
-import userController from "../../module/crud/controller-example";
+import userController from "../controllers/authController";
 import { asyncWrapper } from "../../utils/asyncWrapper";
 
 const authRoutes = express.Router();
@@ -17,6 +17,10 @@ authRoutes.post("/login/check", asyncWrapper(userController.authenticatedLogin))
 
 //GetAll Data
 authRoutes.get("/users", asyncWrapper(userController.findAll));
+
+// PW reset
+authRoutes.get("/password-reset/start/:email", asyncWrapper(userController.startPasswordReset));
+authRoutes.post("/password-reset/finish", asyncWrapper(userController.finishPasswordReset));
 
 //GetBy ID
 authRoutes.get("/users/:userId", asyncWrapper(userController.findOne));

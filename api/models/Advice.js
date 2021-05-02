@@ -2,20 +2,24 @@ import mongoose from "mongoose";
 
 const schema = mongoose.Schema;
 
-const messageSchema = new schema({
-    sender_id: {
+const adviceSchema = new schema({
+    uid: {
         type: String,
         required: true
     },
-    receiver_id: {
+    budget: {
         type: String,
         required: true
     },
-    message: {
+    install: {
+        type: String,
+        required: true
+    },
+    filter: {
         type: String,
         required: true
     }
 }, {timestamps: true});
 
-const messageModel = mongoose.model("message", messageSchema);
-export {messageModel};
+const adviceModel = mongoose.model("advice", adviceSchema);
+export { adviceModel };

@@ -5,7 +5,8 @@ const productRoutes = express.Router();
 
 productRoutes.get("/", productController.findAll);
 productRoutes.get("/get/:id", productController.findById);
-productRoutes.get("/search/:search", productController.search);
-productRoutes.get("/create", productController.create);
+productRoutes.post("/query", productController.query);
+productRoutes.post("/create", productController.create);
+productRoutes.post("/update", productController.update);
 
 export default productRoutes;

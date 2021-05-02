@@ -6,6 +6,6 @@ const technicianRoutes = express.Router();
 technicianRoutes.get("/", technicianController.findAll);
 technicianRoutes.get("/get/:id", technicianController.findById);
 technicianRoutes.get("/search/:search", technicianController.search);
-// technicianRoutes.get("/create", technicianController.create);
+technicianRoutes.post("/create", technicianController.create);
 
 export default technicianRoutes;

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { technicianModel as technician } from "../models/Technician";
+import { technicianModel as Technician } from "../models/Technician";
 import httpStatus from "../../utils/httpStatus";
 import appConfig from "../../config/env";
 
@@ -8,7 +8,7 @@ const technicianController = {};
 
 technicianController.findAll = async (req, res) => {
     try {
-        let technicians = await technician.find();
+        let technicians = await Technician.find();
         return res.json(technicians);
     } catch (error) {
         return res
@@ -28,29 +28,23 @@ technicianController.search = async (req, res) => {
 
 technicianController.findById = async (req, res) => {
     try {
-        const technician = await technician.findById(req.params.id)
+        const technician = await Technician.findById(req.params.id)
         return res.json(technician)
     }catch (err) {
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({error:err.toString()})
     }
 }
 
-// technicianController.create = async (req, res) => {
-//     try {
-//         return new technician({
-//             title: "techniciantitel",
-//             excerpt: 'kortebeschrijving',
-//             description: "langebeschrijving",
-//             specs: 'specsdatastring',
-//             price: 600,
-//             stock: 548,
-//             category: "mobileac"
-//         }).save()
-//     } catch (error) {
-//         return res
-//             .status(httpStatus.INTERNAL_SERVER_ERROR)
-//             .json({ error: error.toString() });
-//     }
-// }
+technicianController.create = async (req, res) => {
+    try {
+        console.log(req.body)
+        const tech = await new Technician(req.body).save()
+        res.status(httpStatus.OK).json(tech)
+    } catch (error) {
+        return res
+            .status(httpStatus.INTERNAL_SERVER_ERROR)
+            .json({ error: error.toString() });
+    }
+}
 
 export default technicianController;

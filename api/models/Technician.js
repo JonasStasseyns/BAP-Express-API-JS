@@ -15,10 +15,6 @@ const technicianSchema = new schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
         required: true
@@ -28,6 +24,14 @@ const technicianSchema = new schema({
         required: true
     },
     city: {
+        type: String,
+        required: true
+    },
+    userId: {
+        type: String,
+        required: true
+    },
+    allowedJobs: {
         type: String,
         required: true
     }

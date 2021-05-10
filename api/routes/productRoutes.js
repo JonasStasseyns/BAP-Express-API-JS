@@ -9,4 +9,4 @@ productRoutes.post("/query", productController.query);
 productRoutes.post("/create", productController.create);
 productRoutes.post("/update", productController.update);
 
-export default productRoutes;
+export default productRoutes
